@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters
+W = 56000       # wealth
+beta = 0.96   # discount factor
+gamma = 2.0   # CRRA coefficient
+R = 1.08      # gross return (1 + r)
+
+# Solve using Euler + budget
+k = (beta * R) ** (1/gamma)          # ratio c1/c0
+c0_star = W / (1 + k / R)            # optimal today
+c1_star = k * c0_star                # optimal tomorrow
+
+print("c0* =", c0_star, "c1* =", c1_star)
+
+# Budget line
+c0_grid = np.linspace(0, W, 200)
+c1_budget = R * (W - c0_grid)
+
+# Plot
+plt.plot(c0_grid, c1_budget, label="Budget line")
+plt.scatter(c0_star, c1_star, color="red", zorder=5, label="Optimum")
+plt.xlabel("C_0")
+plt.ylabel("C_1")
+plt.title("Two-Period Deterministic Model")
+plt.legend()
+plt.show()
